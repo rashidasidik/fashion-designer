@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import useImages from "./hooks/useImages"
+import {Card, Container, Spinner, Row,Col } from "react-bootstrsap"
 
 function App() {
+  const url = "https://jsonplaceholder.typicode.com/photos";
+  const { error, loading, users } = useImages(url);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <Container> 
+ 
+    {loading && <h1>loading...</h1>}
+    {error && <h1>OOPS! ERROR</h1>}
+  
+    <Row>
+    {users &&  
+       users.map((user) => (
+         <Col>
+          <Card>
+            <Card.Img src={user.thumbnailurl}></Card.Img>
+         </Card>
+         </Col>
+
+       ))}
+       </Row>
+       </Container>
+     );
+
+
+  
+};
 
 export default App;
